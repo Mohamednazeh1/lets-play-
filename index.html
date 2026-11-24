@@ -1,60 +1,139 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Let's Play</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: #090909;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-    header {
-      background: #151515;
-      border-bottom: 2px solid #e50914;
-      padding: 22px;
-      text-align: center;
-    }
-    header h1 { margin: 0; color: #e50914; }
-    main { padding: 22px; max-width: 900px; margin: auto; }
-    .card {
-      background: #181818;
-      border: 1px solid #333;
-      border-radius: 14px;
-      padding: 20px;
-      margin: 16px 0;
-    }
-    .status { color: #aaa; }
-    button {
-      background: #e50914;
-      color: white;
-      border: 0;
-      border-radius: 8px;
-      padding: 12px 18px;
-      font-size: 15px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LET'S PLAY | Mohamed Nazeh</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif}
+header{padding:20px;background:#111;border-bottom:2px solid #e50914;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.logo{font-size:28px;font-weight:bold}
+.logo span,.red{color:#ed1420}
+.owner{color:#bbb}
+.layout{display:flex;min-height:85vh}
+nav{width:200px;background:#111;padding:15px}
+nav button{display:block;width:100%;padding:15px;margin-bottom:8px;text-align:right;background:transparent;color:#bbb;border:0;border-radius:8px;font-size:16px}
+nav button.active,nav button:hover{background:#a90008;color:white}
+main{flex:1;padding:22px;min-width:0}
+.welcome{padding:28px;background:linear-gradient(120deg,#240004,#111);border:1px solid #a90008;border-radius:14px;margin-bottom:20px}
+.card{background:#151515;border:1px solid #333;border-radius:12px;padding:18px;margin-bottom:15px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.number{font-size:30px;margin:12px 0;font-weight:bold}
+button.primary{background:#e50914;color:white;border:0;border-radius:8px;padding:12px 18px;font-size:15px;cursor:pointer}
+.muted{color:#999}
+.panel{display:none}
+.panel.active{display:block}
+.empty{text-align:center;padding:35px;color:#aaa}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.modal{display:none;position:fixed;inset:0;background:#000c;align-items:center;justify-content:center;padding:15px}
+.modal.show{display:flex}
+.modal-box{background:#181818;border:1px solid #e50914;border-radius:14px;padding:24px;max-width:400px;width:100%}
+footer{text-align:center;color:#888;padding:20px;border-top:1px solid #a90008}
+@media(max-width:650px){
+.layout{display:block}
+nav{width:100%;display:flex;overflow-x:auto;padding:8px}
+nav button{min-width:100px;text-align:center}
+main{padding:14px}
+.cards{grid-template-columns:repeat(2,1fr)}
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>LET'S PLAY</h1>
-    <p>Android Device Management</p>
-  </header>
-  <main>
-    <div class="card">
-      <h2>لوحة التحكم</h2>
-      <p class="status">مرحباً بك في Let's Play</p>
-      <button onclick="alert('قريباً: إضافة جهاز جديد')">
-        بدا اللعب
-      </button>
-    </div>
-    <div class="card">
-      <h3>الأجهزة المتصلة</h3>
-      <p class="status">لا توجد أجهزة مسجلة حتى الآن</p>
-    </div>
-  </main>
+
+<header>
+ <div class="logo">LET'S <span>PLAY</span></div>
+ <div class="owner">Mohamed Nazeh</div>
+</header>
+
+<div class="layout">
+<nav>
+ <button class="active" onclick="show('home',this)">⌂ الرئيسية</button>
+ <button onclick="show('devices',this)">▣ الأجهزة</button>
+ <button onclick="show('sessions',this)">▶ الجلسات</button>
+ <button onclick="show('settings',this)">⚙ الإعدادات</button>
+ <button onclick="show('about',this)">ⓘ حول البرنامج</button>
+</nav>
+
+<main>
+<section id="home" class="panel active">
+ <div class="welcome">
+  <h1>مرحباً بك في <span class="red">Let's Play</span></h1>
+  <p>إدارة أجهزتك بسهولة وأمان</p>
+  <p class="muted">لوحة التحكم الرئيسية</p>
+ </div>
+ <div class="cards">
+  <div class="card">▶<div class="number">0</div>جلسات نشطة</div>
+  <div class="card">▣<div class="number" id="count">0</div>أجهزة مسجلة</div>
+  <div class="card">●<div class="number">0</div>أجهزة متصلة</div>
+  <div class="card">◷<div class="number">-</div>آخر نشاط</div>
+ </div>
+ <div class="card">
+  <div class="row">
+   <h3>الأجهزة المتصلة</h3>
+   <button class="primary" onclick="openModal()">+ إضافة جهاز</button>
+  </div>
+  <div id="homeList" class="empty">لا توجد أجهزة مسجلة حالياً</div>
+ </div>
+</section>
+
+<section id="devices" class="panel">
+ <div class="row">
+  <h2>إدارة الأجهزة</h2>
+  <button class="primary" onclick="openModal()">+ إضافة جهاز</button>
+ </div>
+ <div id="deviceList" class="empty">لا توجد أجهزة مسجلة حالياً</div>
+</section>
+
+<section id="sessions" class="panel">
+ <h2>جلسات التحكم</h2>
+ <div class="card">
+  <p>لا توجد جلسات نشطة حالياً.</p>
+  <p class="muted">ستتوفر الجلسات بعد إعداد الاتصال الآمن وموافقة الجهاز.</p>
+ </div>
+</section>
+
+<section id="settings" class="panel">
+ <h2>الإعدادات</h2>
+ <div class="card">
+  <p>اسم الحساب: Mohamed Nazeh</p>
+  <p>التصميم: أسود وأحمر</p>
+  <p>حالة النظام: نسخة تجريبية</p>
+ </div>
+</section>
+
+<section id="about" class="panel">
+ <h2>حول البرنامج</h2>
+ <div class="card">
+  <h2 class="red">LET'S PLAY</h2>
+  <p>نظام لإدارة وربط أجهزة Android.</p>
+  <p class="muted">الإصدار 1.0</p>
+ </div>
+</section>
+</main>
+</div>
+
+<footer>LET'S PLAY © 2026 | Mohamed Nazeh</footer>
+
+<div class="modal" id="modal">
+ <div class="modal-box">
+  <h2 class="red">إضافة جهاز جديد</h2>
+  <p>سيتم تجهيز ربط الجهاز بعد إعداد خادم الاتصال والتطبيق المساعد.</p>
+  <p class="muted">يتطلب الربط موافقة الجهاز على الصلاحيات اللازمة.</p>
+  <button class="primary" onclick="closeModal()">حسناً</button>
+ </div>
+</div>
+
+<script>
+function show(id,btn){
+ document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+ btn.classList.add('active');
+}
+function openModal(){document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+</script>
 </body>
 </html>
