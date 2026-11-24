@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Let's Play</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #090909;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      background: #151515;
+      border-bottom: 2px solid #e50914;
+      padding: 22px;
+      text-align: center;
+    }
+    header h1 { margin: 0; color: #e50914; }
+    main { padding: 22px; max-width: 900px; margin: auto; }
+    .card {
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 14px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+    .status { color: #aaa; }
+    button {
+      background: #e50914;
+      color: white;
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LET'S PLAY</h1>
+    <p>Android Device Management</p>
+  </header>
+  <main>
+    <div class="card">
+      <h2>لوحة التحكم</h2>
+      <p class="status">مرحباً بك في Let's Play</p>
+      <button onclick="alert('قريباً: إضافة جهاز جديد')">
+        بدا اللعب
+      </button>
+    </div>
+    <div class="card">
+      <h3>الأجهزة المتصلة</h3>
+      <p class="status">لا توجد أجهزة مسجلة حتى الآن</p>
+    </div>
+  </main>
+</body>
+</html>
